@@ -1,0 +1,173 @@
+﻿@model HotelReservationSystem.Models.LayoutViewModel
+
+@{
+    ViewData["Title"] = "Rooms Page";
+}
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4">Room List</h2>
+        </div>
+        <div class="col text-end">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createRoomModal">
+                Create New Room
+            </button>
+        </div>
+    </div>
+
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>Room ID</th>
+                <th>Room Number</th>
+                <th>Room Type</th>
+                <th>Price</th>
+                <th>Availability Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms)
+            {
+                <tr>
+                    <td>@room.RoomId</td>
+                    <td>@room.RoomNumber</td>
+                    <td>@room.RoomType</td>
+                    <td>@room.Price</td>
+                    <td>@room.AvailabilityStatus</td>
+
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm me-2 edit-button" data-id="@room.RoomId">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+
+                    <form action="@Url.Action("Delete", "Rooms", new { id = room.RoomId })" method="post" style="display:inline-block;">
+                    <td><button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Yakin Mau dihapus Room Number = @room.RoomNumber');"><i class="bi bi-trash3-fill"></i></button></td>
+                    </form>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Create Room Modal -->
+    <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createRoomModalLabel">Create New Room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createRoomForm" method="post" action="@Url.Action("Create", "Rooms")">
+                        <div class="mb-3">
+                            <label for="RoomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="RoomType" class="form-label">Room Type</label>
+                            <input type="text" class="form-control" id="RoomType" name="RoomType" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Price" class="form-label">Price</label>
+                            <input type="text" class="form-control" id="Price" name="Price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="AvailabilityStatus" class="form-label">Availability Status</label>
+                            <input type="text" class="form-control" id="AvailabilityStatus" name="AvailabilityStatus" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- edit Room Modal -->
+    <div class="modal fade" id="editRoomModal" tabindex="-1" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editRoomModalLabel">Edit Room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editRoomForm" method="post" action="@Url.Action("Edit", "Rooms")">
+                        <input type="hidden" id="editRoomId" name="RoomId">
+                        <div class="mb-3">
+                            <label for="editRoomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="editRoomNumber" name="RoomNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editRoomType" class="form-label">Room Type</label>
+                            <input type="text" class="form-control" id="editRoomType" name="RoomType" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPrice" class="form-label">Price</label>
+                            <input type="text" class="form-control" id="editPrice" name="Price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAvailabilityStatus" class="form-label">Availability Status</label>
+                            <input type="text" class="form-control" id="editAvailabilityStatus" name="AvailabilityStatus" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('#myTable').DataTable();
+                setTimeout(function () {
+                    $('.alert').alert('close');
+                }, 3000);
+                // Populate Edit Room Modal
+                $('.edit-button').on('click', function () {
+                    var roomId = $(this).data('id');
+                    $.ajax({
+                        url: '@Url.Action("GetRoom", "Rooms")/' + roomId,
+                        type: 'GET',
+                        success: function (data) {
+                            // Periksa dan sesuaikan properti sesuai dengan struktur data yang dikembalikan
+                            $('#editRoomId').val(data.id);
+                            $('#editRoomNumber').val(data.roomNumber || data.RoomNumber);
+                            $('#editRoomType').val(data.roomType || data.RoomType);
+                            $('#editPrice').val(data.price || data.Price);
+                            $('#editAvailabilityStatus').val(data.availabilityStatus || data.AvailabilityStatus);
+                            $('#editRoomModal').modal('show');
+                        }
+                    });
+                });
+            });
+
+        </script>
+    }

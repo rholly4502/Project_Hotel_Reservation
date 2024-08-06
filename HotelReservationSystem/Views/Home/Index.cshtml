@@ -1,0 +1,66 @@
+﻿@model HotelReservationSystem.Models.LayoutViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hotel Bootcamp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Welcome to Hotel Bootcamp</h1>
+            <p class="lead">Your comfort is our priority. Book a stay with us today!</p>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Our Features</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="img/Suite.png" class="card-img-top" alt="Luxury Rooms">
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury Rooms</h5>
+                            <p class="card-text">Experience the ultimate in luxury with our well-appointed rooms.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="img/Standard.png" class="card-img-top" alt="Fine Dining">
+                        <div class="card-body">
+                            <h5 class="card-title">Fine Dining</h5>
+                            <p class="card-text">Enjoy gourmet meals prepared by our world-class chefs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="img/Deluxe.png" class="card-img-top" alt="Spa Services">
+                        <div class="card-body">
+                            <h5 class="card-title">Spa Services</h5>
+                            <p class="card-text">Relax and rejuvenate with our exclusive spa treatments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            &copy; 2024 Hotel Bootcamp. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
